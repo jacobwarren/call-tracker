@@ -5,7 +5,13 @@ defmodule TrackerWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", TrackerWeb do
+  scope "/" do
     pipe_through :api
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL,
+      schema: TrackerWeb.Schema
+
+    forward "/", Absinthe.Plug,
+      schema: TrackerWeb.Schema
   end
 end
