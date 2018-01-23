@@ -1,7 +1,9 @@
 defmodule TrackerWeb.Schema.CampaignTypes do
   use Absinthe.Schema.Notation
 
-  @desc "A single campaign"
+  alias TrackerWeb.Resolvers
+
+  @desc "A marketing campaign"
   object :campaign do
     field :id, :id
     field :title, :string
@@ -10,10 +12,13 @@ defmodule TrackerWeb.Schema.CampaignTypes do
     field :forward_number, :string
     field :deleted_at, :string
     field :user_id, :id
-    field :calls, list_of(:call)
+    field :calls, list_of(:call) do
+      arg :date, :date
+      resolve &Resolvers.Campaign.list_calls/3
+    end
   end
 
-  @desc "A single call"
+  @desc "A call from a campaign"
   object :call do
     field :id, :id
     field :from_number, :string
@@ -28,6 +33,9 @@ defmodule TrackerWeb.Schema.CampaignTypes do
     field :call_status, :string
     field :deleted_at, :string
     field :campaign, :campaign
-    field :notes, list_of(:note)
+    field :inserted_at, :naive_datetime
+    field :notes, list_of(:note) do
+      resolve &Resolvers.Note.list_notes/3
+    end
   end
 end

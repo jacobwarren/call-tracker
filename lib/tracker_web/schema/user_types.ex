@@ -1,7 +1,7 @@
 defmodule TrackerWeb.Schema.UserTypes do
   use Absinthe.Schema.Notation
 
-  @desc "A single user"
+  @desc "A user with access to campaigns and calls"
   object :user do
     field :id, :id
     field :name, :string

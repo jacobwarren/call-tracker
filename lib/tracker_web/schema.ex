@@ -1,5 +1,6 @@
 defmodule TrackerWeb.Schema do
   use Absinthe.Schema
+  import_types Absinthe.Type.Custom
   import_types TrackerWeb.Schema.UserTypes
   import_types TrackerWeb.Schema.CampaignTypes
   import_types TrackerWeb.Schema.CommunicationTypes

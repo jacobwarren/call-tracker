@@ -1,11 +1,13 @@
 defmodule TrackerWeb.Schema.CommunicationTypes do
   use Absinthe.Schema.Notation
+  use Absinthe.Ecto, repo: Tracker.Repo
 
-  @desc "A single note"
+  @desc "A note in a call"
   object :note do
     field :id, :id
     field :message, :string
-    field :user_id, :id
     field :call_id, :id
+    field :user_id, :id
+    field :user, :user, resolve: assoc(:user)
   end
 end

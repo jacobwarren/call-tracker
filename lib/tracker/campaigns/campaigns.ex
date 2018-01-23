@@ -105,6 +105,11 @@ defmodule Tracker.Campaigns do
 
   alias Tracker.Campaigns.Call
 
+  def list_calls(campaign, _) do
+    from(t in Call, where: t.campaign_id == ^campaign.id)
+    |> Repo.all
+  end
+
   @doc """
   Returns the list of calls.
 

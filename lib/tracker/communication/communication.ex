@@ -9,6 +9,14 @@ defmodule Tracker.Communication do
   alias Tracker.Communication.Note
 
   @doc """
+  Returns the list of notes belonging to a Call.
+  """
+  def list_notes(call, _) do
+    from(t in Note, where: t.call_id == ^call.id)
+    |> Repo.all
+  end
+
+  @doc """
   Returns the list of notes.
 
   ## Examples
