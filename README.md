@@ -1,19 +1,15 @@
 # Tracker
 
-To start your Phoenix server:
+Tracker is a tool built to solve a real problem: Tracking offline marketing ROI.
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Start Phoenix endpoint with `mix phx.server`
+It also serves to be an example of how Elixir, third-party APIs, GraphQL, and React/Redux can come together. Once Ecto.Adapters.Cassandra is complete, Tracker will have a new branch to demonstrate how to model your data with Cassandra and the nuances it entails. 
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+# Tasks
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
-
-## Learn more
-
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+- [  ] **Authentication:** Refresh token on each validation to keep fresh
+- [  ] **Authentication:** Add logout mutation
+- [  ] **Authentication:** Ensure users are logged in before their information can be updated
+- [  ] **Authorization:** Create function that verifies users' roles when performing actions
+- [  ] **Client:** Implement React, Redux, Immutable.JS, and Sagas.
+- [  ] **Client:** Implement auth reducer, and actions
+- [  ] **Logic:** Implement Twilio API
