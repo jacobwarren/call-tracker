@@ -10,6 +10,7 @@ defmodule Tracker.Accounts.User do
     field :deleted_at, :utc_datetime
     field :email, :string
     field :name, :string
+    field :temp_pass, :string, virtual: true
     field :password, :string
     field :role, :string
 
@@ -19,10 +20,33 @@ defmodule Tracker.Accounts.User do
     timestamps()
   end
 
+  def update_changeset(%User{} = user, attrs \\ %{}) do
+    user
+    |> cast(attrs, [:name, :email, :role], [:temp_pass])
+    |> validate_required([:name, :email, :role])
+    |> put_pass_hash()
+  end
+
+  def registration_changeset(%User{} = user, attrs \\ %{}) do
+    user
+    |> cast(attrs, [:name, :email, :role, :temp_password])
+    |> validate_required([:name, :email, :role, :temp_pass])
+    |> put_pass_hash()
+  end
+
   @doc false
   def changeset(%User{} = user, attrs) do
     user
     |> cast(attrs, [:name, :email, :password, :role, :deleted_at])
     |> validate_required([:name, :email, :password, :role, :deleted_at])
+  end
+
+  defp put_pass_hash(changeset) do
+    case changeset do
+      %Ecto.Changeset{valid?: true, changes: %{temp_pass: pass}} ->
+        put_change(changeset, :password, Comeonin.Bcrypt.hashpwsalt(pass))
+      _ ->
+        changeset
+    end
   end
 end

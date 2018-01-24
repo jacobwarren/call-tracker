@@ -12,4 +12,9 @@ defmodule TrackerWeb.Schema.UserTypes do
     field :campaigns, list_of(:campaign)
     field :notes, list_of(:note)
   end
+
+  @desc "A login session"
+  object :session do
+    field :token, :string
+  end
 end

@@ -9,6 +9,25 @@ defmodule Tracker.Accounts do
   alias Tracker.Accounts.User
 
   @doc """
+  Login functionality for all users.
+  """
+  def authenticate(params) do
+    user = Repo.get_by(User, email: String.downcase(params.email))
+
+    case check_password(user, params.password) do
+      true -> {:ok, user}
+      _ -> {:error, "Incorrect email or password"}
+    end
+  end
+
+  defp check_password(user, password) do
+    case user do
+      nil -> false
+      _ -> Comeonin.Bcrypt.checkpw(password, user.password)
+    end
+  end
+
+  @doc """
   Returns the list of users.
 
   ## Examples

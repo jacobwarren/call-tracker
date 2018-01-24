@@ -46,7 +46,9 @@ defmodule Tracker.Mixfile do
       {:absinthe_relay, "~> 1.4.2"},
       {:ex_twilio, "~> 0.5.0"},
       {:comeonin, "~> 4.0"},
-      {:bcrypt_elixir, "~> 1.0.5"}
+      {:bcrypt_elixir, "~> 1.0.5"},
+      {:guardian, "~> 1.0.1"},
+      {:poison, "~> 3.1.0"}
     ]
   end
 

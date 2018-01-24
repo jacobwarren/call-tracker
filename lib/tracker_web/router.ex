@@ -3,6 +3,11 @@ defmodule TrackerWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Guardian.Plug.Pipeline, module: Tracker.Guardian,
+                                 error_handler: Tracker.AuthErrorHandler
+    plug Guardian.Plug.VerifyHeader, realm: "Bearer"
+    plug Guardian.Plug.LoadResource
+    plug TrackerWeb.Context
   end
 
   scope "/" do

@@ -52,4 +52,25 @@ defmodule TrackerWeb.Schema do
       resolve &Resolvers.Note.get_note/3
     end
   end
+
+  mutation do
+    @desc "Create a user"
+    field :create_user, type: :user do
+      arg :email, non_null(:string)
+      arg :password, non_null(:string)
+      arg :name, non_null(:string)
+      arg :role, non_null(:string)
+
+      resolve &Resolvers.User.create_user/3
+    end
+
+
+    @desc "Create a session for a user"
+    field :login, type: :session do
+      arg :email, non_null(:string)
+      arg :temp_pass, non_null(:string)
+
+      resolve &Resolvers.User.login/2
+    end
+  end
 end
