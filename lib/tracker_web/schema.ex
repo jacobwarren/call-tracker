@@ -53,6 +53,12 @@ defmodule TrackerWeb.Schema do
     end
   end
 
+  input_object :update_user_params do
+    field :name, :string
+    field :email, :string
+    field :temp_pass, :string
+  end
+
   mutation do
     @desc "Create a user"
     field :create_user, type: :user do
@@ -64,13 +70,20 @@ defmodule TrackerWeb.Schema do
       resolve &Resolvers.User.create_user/3
     end
 
-
     @desc "Create a session for a user"
     field :login, type: :session do
       arg :email, non_null(:string)
       arg :temp_pass, non_null(:string)
 
       resolve &Resolvers.User.login/2
+    end
+
+    @desc "Update a user's information"
+    field :update_user, type: :user do
+      arg :id, non_null(:string)
+      arg :user, :update_user_params
+      
+      resolve &Resolvers.User.update/2
     end
   end
 end

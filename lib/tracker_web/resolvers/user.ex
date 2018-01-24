@@ -12,9 +12,23 @@ defmodule TrackerWeb.Resolvers.User do
 
   def login(params, _info) do
     with {:ok, user} <- Tracker.Accounts.authenticate(params),
-         {:ok, jwt, _ } <- Tracker.Guardian.encode_and_sign(user, :access) do
-           {:ok, %{token: jwt}}
-         end
+         {:ok, jwt, _} <- Tracker.Auth.Guardian.encode_and_sign(
+           user,
+           %{},
+           token_type: "access"
+         ) do
+      {:ok, %{token: jwt}}
+    end
+  end
+
+  def update(%{id: id, user: user_params}, _info) do
+    case Tracker.Accounts.get_user!(id) do
+      nil ->
+        {:error, "User ID #{id} not found"}
+      user ->
+        Tracker.Accounts.update_user(%Tracker.Accounts.User{id: id}, user_params)
+        {:ok, user}
+    end
   end
 
   @doc """

@@ -14,16 +14,17 @@ defmodule Tracker.Accounts do
   def authenticate(params) do
     user = Repo.get_by(User, email: String.downcase(params.email))
 
-    case check_password(user, params.password) do
+    case check_password(user, params.temp_pass) do
       true -> {:ok, user}
       _ -> {:error, "Incorrect email or password"}
     end
   end
 
-  defp check_password(user, password) do
+  defp check_password(user, temp_pass) do
     case user do
       nil -> false
-      _ -> Comeonin.Bcrypt.checkpw(password, user.password)
+      # _ -> Comeonin.Bcrypt.checkpw(temp_pass, user.password)
+      _ -> temp_pass == user.password
     end
   end
 
@@ -88,7 +89,7 @@ defmodule Tracker.Accounts do
   """
   def update_user(%User{} = user, attrs) do
     user
-    |> User.changeset(attrs)
+    |> User.update_changeset(attrs)
     |> Repo.update()
   end
 

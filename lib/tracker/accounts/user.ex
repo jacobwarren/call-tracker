@@ -29,7 +29,7 @@ defmodule Tracker.Accounts.User do
 
   def registration_changeset(%User{} = user, attrs \\ %{}) do
     user
-    |> cast(attrs, [:name, :email, :role, :temp_password])
+    |> cast(attrs, [:name, :email, :role, :temp_pass])
     |> validate_required([:name, :email, :role, :temp_pass])
     |> put_pass_hash()
   end
