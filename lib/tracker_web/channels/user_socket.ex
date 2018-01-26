@@ -1,5 +1,6 @@
 defmodule TrackerWeb.UserSocket do
   use Phoenix.Socket
+  use Absinthe.Phoenix.Socket, schema: TrackerWeb.Schema
 
   ## Channels
   # channel "room:*", TrackerWeb.RoomChannel

@@ -11,7 +11,8 @@ defmodule TrackerWeb.Router do
     pipe_through :api
 
     forward "/graphiql", Absinthe.Plug.GraphiQL,
-      schema: TrackerWeb.Schema
+      schema: TrackerWeb.Schema,
+      socket: TrackerWeb.UserSocket 
 
     forward "/", Absinthe.Plug,
       schema: TrackerWeb.Schema

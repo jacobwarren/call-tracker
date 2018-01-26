@@ -1,19 +1,44 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import { QueryRenderer, graphql } from 'react-relay';
+
+import environment from './relay-environment';
+
+const query = graphql`
+  query AppQuery { campaigns { id title } }
+`;
 
 class App extends Component {
+
+  renderCampaign(campaign) {
+    return (
+      <li key={campaign.id}>{campaign.title}</li>
+    );
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <QueryRenderer
+        environment={environment}
+        query={query}
+        render={({ error, props }) => {
+          if (error) {
+            return (
+              <div>{error.message}</div>
+            );
+          } else if (props) {
+            return (
+              <ul>
+                {props.campaigns.map(campaign => this.renderCampaign(campaign))}
+              </ul>
+            );
+          } else {
+            return (
+              <div>Loading...</div>
+            )
+          }
+        }}
+        />
     );
   }
 }

@@ -1,0 +1,119 @@
+schema {
+  query: RootQueryType
+  mutation: RootMutationType
+}
+
+# A call from a campaign
+type Call {
+  callSid: String
+  callStatus: String
+  campaign: Campaign
+  deletedAt: String
+  fromCity: String
+  fromCountry: String
+  fromName: String
+  fromNumber: String
+  fromState: String
+  fromType: String
+  fromZip: String
+  id: ID
+  insertedAt: NaiveDateTime
+  notes: [Note]
+  recordingUrl: String
+}
+
+# A marketing campaign
+type Campaign {
+  calls(date: Date): [Call]
+  deletedAt: String
+  description: String
+  forwardNumber: String
+  id: ID
+  maskedNumber: String
+  title: String
+  userId: ID
+}
+
+# The `Date` scalar type represents a date. The Date appears in a JSON
+# response as an ISO8601 formatted string.
+scalar Date
+
+# The `Naive DateTime` scalar type represents a naive date and time without
+# timezone. The DateTime appears in a JSON response as an ISO8601 formatted
+# string.
+scalar NaiveDateTime
+
+# A note in a call
+type Note {
+  callId: ID
+  id: ID
+  message: String
+  user: User
+  userId: ID
+}
+
+type RootMutationType {
+  # Create a user
+  createUser(email: String!, name: String!, password: String!, role: String!): User
+
+  # Create a session for a user
+  login(email: String!, tempPass: String!): Session
+
+  # Update a user's information
+  updateUser(id: String!, user: UpdateUserParams): User
+}
+
+type RootQueryType {
+  # Get a call
+  call(id: ID!): Call
+
+  # Get all calls
+  calls(order: SortOrder = DESC): [Call]
+
+  # Get a campaign
+  campaign(id: ID!): Campaign
+
+  # Get all campaigns
+  campaigns: [Campaign]
+
+  # Get a note
+  note(id: ID!): Note
+
+  # Get all notes
+  notes: [Note]
+
+  # Get a user
+  user(id: ID!): User
+
+  # Get all users
+  users: [User]
+}
+
+# A login session
+type Session {
+  token: String
+}
+
+enum SortOrder {
+  ASC
+  DESC
+}
+
+input UpdateUserParams {
+  email: String
+  name: String
+  tempPass: String
+}
+
+# A user with access to campaigns and calls
+type User {
+  campaigns: [Campaign]
+  deletedAt: String
+  email: String
+  id: ID
+  name: String
+  notes: [Note]
+  password: String
+  role: String
+}
+
