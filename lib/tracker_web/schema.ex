@@ -1,5 +1,7 @@
 defmodule TrackerWeb.Schema do
   use Absinthe.Schema
+  # use Absinthe.Relay.Schema, :modern
+  
   import_types Absinthe.Type.Custom
   import_types TrackerWeb.Schema.UserTypes
   import_types TrackerWeb.Schema.CampaignTypes
@@ -32,6 +34,7 @@ defmodule TrackerWeb.Schema do
 
     @desc "Get all calls"
     field :calls, list_of(:call) do
+      arg :order, type: :sort_order, default_value: :desc
       resolve &Resolvers.Campaign.list_calls/3
     end
 
@@ -85,5 +88,10 @@ defmodule TrackerWeb.Schema do
       
       resolve &Resolvers.User.update/2
     end
+  end
+
+  enum :sort_order do
+    value :asc
+    value :desc
   end
 end

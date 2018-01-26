@@ -1,5 +1,6 @@
 defmodule TrackerWeb.Schema.UserTypes do
   use Absinthe.Schema.Notation
+  # use Absinthe.Relay.Schema.Notation, :modern
 
   @desc "A user with access to campaigns and calls"
   object :user do

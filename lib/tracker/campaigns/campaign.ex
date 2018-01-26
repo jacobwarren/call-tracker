@@ -25,5 +25,6 @@ defmodule Tracker.Campaigns.Campaign do
     campaign
     |> cast(attrs, [:title, :masked_number, :forward_number, :description, :deleted_at])
     |> validate_required([:title, :masked_number, :forward_number, :description, :deleted_at])
+    |> unique_constraint(:title)
   end
 end

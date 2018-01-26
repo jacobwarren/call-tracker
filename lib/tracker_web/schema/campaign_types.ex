@@ -1,5 +1,6 @@
 defmodule TrackerWeb.Schema.CampaignTypes do
   use Absinthe.Schema.Notation
+  # use Absinthe.Relay.Schema.Notation, :modern
 
   alias TrackerWeb.Resolvers
 

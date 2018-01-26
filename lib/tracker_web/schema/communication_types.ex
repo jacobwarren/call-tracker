@@ -1,5 +1,6 @@
 defmodule TrackerWeb.Schema.CommunicationTypes do
   use Absinthe.Schema.Notation
+  # use Absinthe.Relay.Schema.Notation, :modern
   use Absinthe.Ecto, repo: Tracker.Repo
 
   @desc "A note in a call"
