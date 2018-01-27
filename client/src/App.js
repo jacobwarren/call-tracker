@@ -5,7 +5,16 @@ import { QueryRenderer, graphql } from 'react-relay';
 import environment from './relay-environment';
 
 const query = graphql`
-  query AppQuery { campaigns { id title } }
+  query AppQuery {
+    campaigns {
+      id
+      title
+      calls {
+        id
+        fromName
+      }
+    }
+  }
 `;
 
 class App extends Component {
